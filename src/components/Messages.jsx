@@ -1,14 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {  useEffect,  useRef } from "react";
 import Message from "./Message";
-import Input from "./Input";
 
 const Messages = ({ messages }) => {
 
-  // const [inputValue, setInputValue] = useState('');
-  // const handleSubmit = (value) => {
-  //   setInputValue(value);
-  // };
   
+ 
   const messageRef = useRef(null);
 
   useEffect(() => {
@@ -17,16 +13,11 @@ const Messages = ({ messages }) => {
 
 
 
-  
-
-
   return (
     <div className="messages" ref={messageRef}>
-      
-
 
       {messages.map((message, index) => (
-        <Message key={index} inputValue={message} />
+        <Message  key={index} inputValue={message} />
       ))}
     
 
@@ -34,4 +25,4 @@ const Messages = ({ messages }) => {
   );
 };
 
-export default Messages;
+export default  (Messages);

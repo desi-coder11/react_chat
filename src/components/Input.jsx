@@ -5,23 +5,14 @@ import { Mention } from "react-mentions";
 
 const Input = ({ onSubmit }) => {
   const [inputText, setInputText] = useState("");
-  // const [items, setItems] = useState([]);
   const [value, setValue] = useState("");
   const [showPicker, setShowPicker] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [text, setText] = useState("");
-
 
   const [mentionValue, setMentionValue] = useState("");
 
-  // const [inputText, setInputText] = useState("");
-  ///////////////////////////////////////////////
   const [items, setItems] = useState([]);
-
-  function handleChange(event) {
-    const newValue = event.target.value;
-    setInputText(newValue);
-  }
 
   const handleChangenew = (event) => {
     setInputValue(event.target.value);
@@ -30,8 +21,7 @@ const Input = ({ onSubmit }) => {
   const handleSubmitnew = (event) => {
     event.preventDefault();
     onSubmit(inputValue);
-    setInputValue('');
-
+    setInputValue("");
   };
 
   function addItem() {
@@ -40,101 +30,40 @@ const Input = ({ onSubmit }) => {
     });
     setInputText("");
   }
-  ////////////////////////////////////////////
 
   const handleAddMention = (mention) => {
     setMentionValue(mentionValue + mention);
   };
-  /////////////bbbbbbbbbbbb////////////
-  // const handleChange = (event) => {
-  //   event.preventDefault();
-  //   setInputText(event.target.value);
-  //   setInputText("");
-  // };
-  ///////////////////bbbbbbbbbbbbb///////////
 
-  const handleEmojiClick = (emoji, emojiObject) => {
+  const handleEmojiClick = (emojiObject) => {
     console.log(emojiObject);
-    setText(text + emoji.emoji);
-
-    // setInputText(inputText + emoji.emoji);
+    // setText(text + emoji.emoji);
   };
 
-  // function handleChange() {
-  //   setInputText(prevItems => {
-  //     return [...prevItems, inputText];
-  //   });
-  //   setInputText("");
-  // }
+  const onEmojiClick = (event, emojiObject) => {
+    setItems(prevInput => inputText + emojiObject.emoji);
+    setShowPicker(false);
+  };
 
   const handleChangeMention = (event) => {
     setValue(event.target.value);
   };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    setValue((prevValue) => {
-      return [...prevValue, value];
-    });
-    setValue("");
-  };
-
-  //   const handleText = (event) =>{
-  //     event.preventDefault();
-
-  //     setInputText(prevItems => {
-  //       return [...prevItems, inputText];
-  //     });
-  //     setInputText("");
-
-  // }
 
   const handleTextInputBlur = (e) => {
     setShowPicker(false);
   };
 
   return (
-    // <form className='input' >
-    //   <input
-    //     type="text"
-    //     placeholder="Type something..."
-    //     // onChange={handleChange}
-    //     onChange={(e) => setInputText(e.target.value)}
-
-    //     value={inputText}
-    //   />
-
-    //   <div className="send">
-
-    //     <button onClick={addItem}>
-    //       {/* send */}
-    //     <AddReactionOutlined/>
-    //     </button>
-
-    //   </div>
-    // </form>
-    // onSubmit={handleSubmit}
-
-    <form className="input"  onSubmit={handleSubmitnew}>
+    <form className="input" onSubmit={handleSubmitnew}>
+      
       <input
         onChange={handleChangenew}
         type="text"
         value={inputValue}
         placeholder="Type something."
-        //  value={props.text}
-        ////////////
-        // onChange={(event) => {
-        //   event.preventDefault();
-
-        //   setInputText(event.target.value);
-        // }}
-        /////////////////
-        // onChange={(e) => setInputText(e.target.value)}
-        // value={inputText}
-        // onChange={handleText}
         onBlur={handleTextInputBlur}
       />
+            
 
       <button onClick={addItem}></button>
 
@@ -151,18 +80,10 @@ const Input = ({ onSubmit }) => {
         onAdd={handleAddMention}
         trigger={"@"}
         data={[
-          { id: 1, display: "John Doe" },
-          { id: 2, display: "Jane Doe" },
+          { id: 1, display: "Alan" },
+          { id: 2, display: "Bob" },
         ]}
       />
-
-      {/* <button onClick={setValue}>
-        <AddReactionOutlined/>
-        </button> */}
-      {/* <button type='submit' className='send' onClick={setValue} >
-        <AddReactionOutlined/>
-
-        </button> */}
 
       <button onClick={() => setShowPicker(!showPicker)}>
         <AddReactionOutlined />
