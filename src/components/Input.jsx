@@ -3,26 +3,61 @@ import EmojiPicker from "emoji-picker-react";
 import { AddReactionOutlined } from "@mui/icons-material";
 import { Mention } from "react-mentions";
 
-const Input = (props) => {
+const Input = ({ onSubmit }) => {
   const [inputText, setInputText] = useState("");
   // const [items, setItems] = useState([]);
   const [value, setValue] = useState("");
   const [showPicker, setShowPicker] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [text, setText] = useState("");
+
 
   const [mentionValue, setMentionValue] = useState("");
+
+  // const [inputText, setInputText] = useState("");
+  ///////////////////////////////////////////////
+  const [items, setItems] = useState([]);
+
+  function handleChange(event) {
+    const newValue = event.target.value;
+    setInputText(newValue);
+  }
+
+  const handleChangenew = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleSubmitnew = (event) => {
+    event.preventDefault();
+    onSubmit(inputValue);
+    setInputValue('');
+
+  };
+
+  function addItem() {
+    setItems((prevItems) => {
+      return [...prevItems, inputText];
+    });
+    setInputText("");
+  }
+  ////////////////////////////////////////////
 
   const handleAddMention = (mention) => {
     setMentionValue(mentionValue + mention);
   };
+  /////////////bbbbbbbbbbbb////////////
+  // const handleChange = (event) => {
+  //   event.preventDefault();
+  //   setInputText(event.target.value);
+  //   setInputText("");
+  // };
+  ///////////////////bbbbbbbbbbbbb///////////
 
-  const handleChange = (event) => {
-    event.preventDefault();
-    setInputText(event.target.value);
-    setInputText("");
-  };
-
-  const handleEmojiClick = (event, emojiObject) => {
+  const handleEmojiClick = (emoji, emojiObject) => {
     console.log(emojiObject);
+    setText(text + emoji.emoji);
+
+    // setInputText(inputText + emoji.emoji);
   };
 
   // function handleChange() {
@@ -81,21 +116,35 @@ const Input = (props) => {
     // </form>
     // onSubmit={handleSubmit}
 
-    <form className="input" onSubmit={handleSubmit}>
+    <form className="input"  onSubmit={handleSubmitnew}>
       <input
-        placeholder="Type something."
+        onChange={handleChangenew}
         type="text"
-        value={inputText}
-        onChange={(event) => {
-          event.preventDefault();
+        value={inputValue}
+        placeholder="Type something."
+        //  value={props.text}
+        ////////////
+        // onChange={(event) => {
+        //   event.preventDefault();
 
-          setInputText(event.target.value);
-        }}
+        //   setInputText(event.target.value);
+        // }}
+        /////////////////
         // onChange={(e) => setInputText(e.target.value)}
         // value={inputText}
         // onChange={handleText}
         onBlur={handleTextInputBlur}
       />
+
+      <button onClick={addItem}></button>
+
+      <div className="item_content">
+        <div>
+          {items.map((todoItem) => (
+            <div>{todoItem}</div>
+          ))}
+        </div>
+      </div>
 
       <Mention
         value={mentionValue}
